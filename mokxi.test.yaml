@@ -1,0 +1,12 @@
+name: Circuito base
+project: .
+board: uno
+timeout: 10s
+fail-on: [panic]
+
+tests:
+  - name: El firmware inicia y el LED integrado parpadea
+    steps:
+      - wait-serial: Ready
+      - expect-toggles: { pin: 13, during: 1s, min: 3, max: 5 }
+

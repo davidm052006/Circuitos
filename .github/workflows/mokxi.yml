@@ -1,0 +1,37 @@
+name: Validar circuito
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mokxi-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  simulate:
+    name: Simular componentes
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ejecutar escenarios Mokxi
+        uses: mokxiorg/sim-action@v1
+        with:
+          path: .
+          scenario: mokxi.test.yaml
+          junit: mokxi-junit.xml
+
+      - name: Publicar informe de pruebas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mokxi-junit
+          path: mokxi-junit.xml
+          if-no-files-found: warn
+          retention-days: 14
