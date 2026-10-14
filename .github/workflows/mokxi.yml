@@ -20,12 +20,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Ejecutar escenarios Mokxi
-        uses: mokxiorg/sim-action@v1
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
         with:
-          path: .
-          scenario: mokxi.test.yaml
-          junit: mokxi-junit.xml
+          node-version: 22
+
+      - name: Restaurar compilador y runtimes Mokxi
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/mokxi
+          key: mokxi-${{ runner.os }}-${{ hashFiles('**/mokxi.test.yaml', '**/*.ino', '**/*.cpp', '**/*.h', '**/*.json') }}
+          restore-keys: mokxi-${{ runner.os }}-
+
+      - name: Ejecutar escenarios Mokxi
+        run: npx @mokxi/cli test --scenario mokxi.test.yaml --junit mokxi-junit.xml
 
       - name: Publicar informe de pruebas
         if: always()
