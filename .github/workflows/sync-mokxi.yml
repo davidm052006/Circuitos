@@ -1,0 +1,32 @@
+name: Sincronizar Mokxi
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mokxi-sync-main
+  cancel-in-progress: false
+
+jobs:
+  push-project:
+    name: Publicar circuito en Mokxi
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      MOKXI_TOKEN: ${{ secrets.MOKXI_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sincronizar el proyecto vinculado
+        run: |
+          set -euo pipefail
+          if [[ -z "${MOKXI_TOKEN}" ]]; then
+            echo "MOKXI_TOKEN no está configurado; se omite la publicación."
+            echo "Crea el secreto después de vincular el proyecto con mokxi pull."
+            exit 0
+          fi
+          npx @mokxi/cli push .

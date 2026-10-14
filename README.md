@@ -9,6 +9,11 @@ Repositorio de firmware y pruebas de los circuitos gestionados desde Duo.
 3. Tras fusionar en `main`, el proceso local `mokxi watch` sincroniza el repositorio con Mokxi.
 4. Duo abre Mokxi en su vista **Circuitos** usando Chromium/CEF.
 
+GitHub Actions también publica `main` en Mokxi automáticamente. Después de
+vincular el proyecto, crea el secreto de repositorio `MOKXI_TOKEN` con scopes
+`projects:read` y `projects:write`. Hasta que exista, el workflow de publicación
+se omite de forma segura; la validación sigue funcionando sin token.
+
 ## Primera vinculación con Mokxi
 
 Abre o crea el circuito en Mokxi, descárgalo con la CLI dentro de este repositorio y registra el proyecto:
