@@ -1,15 +1,28 @@
-// Prueba mínima para el flujo Duo → GitHub Actions → Mokxi.
-// Sustituye este sketch al importar o crear el circuito real en Mokxi.
-constexpr int ledPin = LED_BUILTIN;
+// Semaforo de tres luces - Arduino Mega 2560
+// Conexiones: D8 rojo, D9 amarillo, D10 verde.
+// Cada LED lleva una resistencia de 220 ohmios en serie y catodo a GND.
+const byte LED_ROJO = 8;
+const byte LED_AMARILLO = 9;
+const byte LED_VERDE = 10;
+
+void encender(bool rojo, bool amarillo, bool verde) {
+  digitalWrite(LED_ROJO, rojo ? HIGH : LOW);
+  digitalWrite(LED_AMARILLO, amarillo ? HIGH : LOW);
+  digitalWrite(LED_VERDE, verde ? HIGH : LOW);
+}
 
 void setup() {
-  pinMode(ledPin, OUTPUT);
-  Serial.begin(115200);
-  Serial.println("Ready");
+  pinMode(LED_ROJO, OUTPUT);
+  pinMode(LED_AMARILLO, OUTPUT);
+  pinMode(LED_VERDE, OUTPUT);
+  encender(false, false, false);
 }
 
 void loop() {
-  digitalWrite(ledPin, !digitalRead(ledPin));
-  delay(250);
+  encender(true, false, false);   // Alto
+  delay(5000);
+  encender(false, false, true);   // Siga
+  delay(5000);
+  encender(false, true, false);   // Precaucion
+  delay(2000);
 }
-
