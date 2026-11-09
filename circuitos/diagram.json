@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "author": "Circuitos - semaforo Arduino Mega",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-mega",
+      "id": "mega",
+      "top": 20,
+      "left": 20,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledRojo",
+      "top": 45,
+      "left": 510,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledAmarillo",
+      "top": 145,
+      "left": 510,
+      "attrs": {
+        "color": "yellow"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "ledVerde",
+      "top": 245,
+      "left": 510,
+      "attrs": {
+        "color": "green"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rRojo",
+      "top": 65,
+      "left": 405,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rAmarillo",
+      "top": 165,
+      "left": 405,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rVerde",
+      "top": 265,
+      "left": 405,
+      "attrs": {
+        "value": "220"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "mega:8",
+      "rRojo:1",
+      "red",
+      []
+    ],
+    [
+      "rRojo:2",
+      "ledRojo:A",
+      "red",
+      []
+    ],
+    [
+      "ledRojo:C",
+      "mega:GND.1",
+      "black",
+      []
+    ],
+    [
+      "mega:9",
+      "rAmarillo:1",
+      "yellow",
+      []
+    ],
+    [
+      "rAmarillo:2",
+      "ledAmarillo:A",
+      "yellow",
+      []
+    ],
+    [
+      "ledAmarillo:C",
+      "mega:GND.1",
+      "black",
+      []
+    ],
+    [
+      "mega:10",
+      "rVerde:1",
+      "green",
+      []
+    ],
+    [
+      "rVerde:2",
+      "ledVerde:A",
+      "green",
+      []
+    ],
+    [
+      "ledVerde:C",
+      "mega:GND.1",
+      "black",
+      []
+    ]
+  ]
+}
