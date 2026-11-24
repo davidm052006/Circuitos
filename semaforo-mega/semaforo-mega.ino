@@ -1,26 +1,43 @@
-// Semaforo para Arduino Mega 2560
-// Rojo D8, amarillo D9, verde D10 (220 ohmios en cada LED).
-const int rojo = 8;
-const int amarillo = 9;
-const int verde = 10;
-void luces(bool r, bool a, bool v) {
-  digitalWrite(rojo, r ? HIGH : LOW);
-  digitalWrite(amarillo, a ? HIGH : LOW);
-  digitalWrite(verde, v ? HIGH : LOW);
+// Semaforo Arduino Mega 2560 con pulsador de avance.
+const byte leds[] = {10, 11, 12, 11};
+const unsigned long duracion[] = {5000, 2000, 5000, 2000};
+const byte BOTON = 2;
+const unsigned long ACELERADO = 500;
+byte fase = 0;
+unsigned long inicio, limite, cambioBoton;
+bool lectura = HIGH, estable = HIGH;
+
+void iniciarFase(unsigned long ahora) {
+  for (byte pin = 10; pin <= 12; pin++) digitalWrite(pin, LOW);
+  digitalWrite(leds[fase], HIGH);
+  inicio = ahora;
+  limite = duracion[fase];
 }
+
 void setup() {
-  pinMode(rojo, OUTPUT);
-  pinMode(amarillo, OUTPUT);
-  pinMode(verde, OUTPUT);
-  luces(LOW, LOW, LOW);
+  for (byte pin = 10; pin <= 12; pin++) pinMode(pin, OUTPUT);
+  pinMode(BOTON, INPUT_PULLUP);
+  cambioBoton = millis();
+  iniciarFase(millis());
 }
+
 void loop() {
-  luces(HIGH, LOW, LOW);  // ROJO
-  delay(5000);
-  luces(LOW, HIGH, LOW);  // AMARILLO
-  delay(2500);
-  luces(LOW, LOW, HIGH);  // VERDE
-  delay(5000);
-  luces(LOW, HIGH, LOW);  // AMARILLO
-  delay(2500);
+  unsigned long ahora = millis();
+  bool actual = digitalRead(BOTON);
+  if (actual != lectura) {
+    lectura = actual;
+    cambioBoton = ahora;
+  }
+  if (lectura != estable && ahora - cambioBoton >= 30) {
+    estable = lectura;
+    if (estable == LOW) {
+      unsigned long transcurrido = ahora - inicio;
+      if (transcurrido < limite && limite - transcurrido > ACELERADO)
+        limite = transcurrido + ACELERADO;
+    }
+  }
+  if (ahora - inicio >= limite) {
+    fase = (fase + 1) % 4;
+    iniciarFase(ahora);
+  }
 }
