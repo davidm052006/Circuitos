@@ -63,59 +63,81 @@
       "attrs": {
         "value": "220"
       }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "boton",
+      "top": 45,
+      "left": -110,
+      "attrs": {
+        "color": "red",
+        "label": "Acelerar"
+      }
     }
   ],
   "connections": [
     [
-      "mega:8",
-      "rRojo:1",
-      "red",
-      []
-    ],
-    [
-      "rRojo:2",
-      "ledRojo:A",
-      "red",
-      []
-    ],
-    [
-      "ledRojo:C",
-      "mega:GND.1",
-      "black",
-      []
-    ],
-    [
-      "mega:9",
-      "rAmarillo:1",
-      "yellow",
-      []
-    ],
-    [
-      "rAmarillo:2",
-      "ledAmarillo:A",
-      "yellow",
-      []
-    ],
-    [
-      "ledAmarillo:C",
-      "mega:GND.1",
-      "black",
-      []
-    ],
-    [
       "mega:10",
-      "rVerde:1",
+      "ledRojo:A",
       "green",
       []
     ],
     [
-      "rVerde:2",
+      "mega:11",
+      "ledAmarillo:A",
+      "green",
+      []
+    ],
+    [
+      "mega:12",
       "ledVerde:A",
       "green",
       []
     ],
     [
+      "ledRojo:C",
+      "rRojo:2",
+      "green",
+      []
+    ],
+    [
+      "rRojo:1",
+      "mega:GND.1",
+      "black",
+      []
+    ],
+    [
+      "ledAmarillo:C",
+      "rAmarillo:2",
+      "green",
+      []
+    ],
+    [
+      "rAmarillo:1",
+      "mega:GND.1",
+      "black",
+      []
+    ],
+    [
       "ledVerde:C",
+      "rVerde:2",
+      "green",
+      []
+    ],
+    [
+      "rVerde:1",
+      "mega:GND.1",
+      "black",
+      []
+    ],
+    [
+      "boton:1.l",
+      "mega:2",
+      "green",
+      []
+    ],
+    [
+      "boton:2.l",
       "mega:GND.1",
       "black",
       []
